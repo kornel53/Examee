@@ -1,4 +1,4 @@
-package krawczyk.Examme;
+package krawczyk.Examee;
 
 public class Main {
 
