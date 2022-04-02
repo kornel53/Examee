@@ -1,0 +1,13 @@
+Test Exam
+30
+2
+How do you do?
+2
+Good
+Bad
+1
+Are you coming back home tomorrow?
+2
+Yes
+No
+1
