@@ -1,8 +1,13 @@
 package krawczyk.Examee;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class Main {
 
-    public static void main(String[] args) {
-	// write your code here
+    public static void main(String[] args) throws IOException {
+        ExamManager.start();
     }
 }

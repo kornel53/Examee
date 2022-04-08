@@ -10,6 +10,7 @@ public class Question implements Serializable {
 
 	public Question(String mainQuestion) {
 		this.mainQuestion = mainQuestion;
+		this.answers = new ArrayList<>();
 	}
 	public Question(String mainQuestion, ArrayList<String> answers, int correctAnswer) {
 		this.mainQuestion = mainQuestion;
