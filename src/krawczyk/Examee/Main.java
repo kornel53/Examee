@@ -1,13 +1,13 @@
 package krawczyk.Examee;
 
-import java.io.File;
+import krawczyk.Examee.Server.ExamManager;
+
 import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
-        ExamManager.start();
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        ExamManager manager = new ExamManager();
+        manager.start();
     }
 }

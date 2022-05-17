@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public class Question implements Serializable {
 	private String mainQuestion;
 	private ArrayList<String> answers;
-	private transient int correctAnswer; // no point to serialize that
+	private int correctAnswer;
 
 	public Question(String mainQuestion) {
 		this.mainQuestion = mainQuestion;

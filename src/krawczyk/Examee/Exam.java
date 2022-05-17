@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Exam implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2L;
 	private String title;
 	private int durationInMinutes;
 	private ArrayList<Question> questions;
@@ -17,11 +17,16 @@ public class Exam implements Serializable {
 		return title;
 	}
 
+	public ArrayList<Question> getQuestions() {
+		return questions;
+	}
+
 	public void createNewAndSaveToFile() throws IOException {
 		// Exam's data
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Enter exam's title: ");
 		title = sc.nextLine();
+		title = title.toUpperCase();
 		while(true) {
 			System.out.println("Enter exam duration in minutes (as natural number): ");
 			try {
@@ -86,7 +91,6 @@ public class Exam implements Serializable {
 				answerQuantity++;
 			}
 			questionQuantity++;
-			//if(userAnswer.equalsIgnoreCase("q")) break;
 		}
 
 		System.out.println("Save to file? (Y/N)");
@@ -104,9 +108,9 @@ public class Exam implements Serializable {
 
 	private String formatExamTitleToFileName() {
 		String filename = title.trim() + "---";
-		filename = filename.replaceAll("\\s", "_");
+		filename = filename.replaceAll(" ", "_");
 		LocalDateTime currentData = LocalDateTime.now();
-		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-MM-SS");
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss-SS");
 		String formattedData = currentData.format(myFormatObj);
 		filename += formattedData;
 		filename += ".dat";
@@ -115,7 +119,7 @@ public class Exam implements Serializable {
 
 	public static String formatFileNameToExamTitle(String filename) {
 		filename = filename.substring(0, filename.indexOf("---"));
-		filename = filename.replaceAll("_", "\\s");
+		filename = filename.replaceAll("_", " ");
 		return filename;
 	}
 
