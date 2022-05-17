@@ -27,7 +27,6 @@ public class ExamClient {
 		String studentName = scanner.nextLine();
 		System.out.println("Starting server");
 		s = new Socket(host.getHostName(), port);
-		System.out.println("Server started.");
 		System.out.println("Waiting for data...");
 		Thread.sleep(100);
 		oos = new ObjectOutputStream(s.getOutputStream());
@@ -40,6 +39,8 @@ public class ExamClient {
 		do {
 			System.out.println("Are you ready to start an exam? (Y/N)");
 		} while (!scanner.nextLine().equalsIgnoreCase("y"));
+		System.out.print("\033[H\033[2J"); //clears the console
+		System.out.flush();
 
 		oos.writeObject(startExam(exam));
 
@@ -60,9 +61,12 @@ public class ExamClient {
 				System.out.print("\t" + answerCounter++ + ". ");
 				System.out.println(answer);
 			}
-			System.out.println("Which answer is correct? (1-" + (answerCounter-1) +"): ");
+			System.out.print("Which answer is correct? (1-" + (answerCounter-1) +"): ");
 			Scanner scanner = new Scanner(System.in);
 			answers.add(scanner.nextInt());
+
+			System.out.print("\033[H\033[2J"); //clears the console
+			System.out.flush();
 		}
 		return answers;
 	}

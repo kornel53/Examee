@@ -55,14 +55,16 @@ public class ExamManager {
 					System.out.println("Existing exams:");
 					File quizDirectory = new File("quiz");
 					HashMap<String, String> quizzes = new HashMap<>();
+					boolean examsExist = false;
 					for( File f : quizDirectory.listFiles()){
 						String quizFile = f.getName();
 						String quizTitle = Exam.formatFileNameToExamTitle(f.getName());
 						quizzes.put(quizTitle, quizFile);
 						System.out.println(quizTitle);
+						examsExist = true;
 					}
 					boolean success = false;
-					while(!success) {
+					while(!success && examsExist) {
 						System.out.println("Enter a title: ");
 						String chosenExamTitle = scanner.nextLine();
 						for(Map.Entry<String, String> quiz : quizzes.entrySet()) {

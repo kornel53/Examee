@@ -13,16 +13,25 @@ public class ExamServer {
 	private static ServerSocket server;
 	private static int port = 1200;
 	private Exam exam;
+	private String filename;
 
 	public ExamServer(Exam exam) {
 		this.exam = exam;
+		filename = exam.getTitle();
+		filename = filename.replaceAll(" ", "_");
+		filename += "-RESULTS-";
+		LocalDateTime currentData = LocalDateTime.now();
+		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss-SS");
+		String formattedData = currentData.format(myFormatObj);
+		filename += formattedData;
+		filename += ".txt";
 	}
 
 	public void runServer() throws IOException, ClassNotFoundException, InterruptedException {
 		server = new ServerSocket(port);
 
 		while(true) {
-			System.out.println("Waiting for the request");
+			System.out.println("Waiting for the student...");
 			Socket s = server.accept();
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			String studentName = (String) ois.readObject();
@@ -31,7 +40,6 @@ public class ExamServer {
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
 			System.out.println("Sending exam to: " + studentName);
 			oos.writeObject(exam);
-			oos.close();
 
 			ArrayList<Integer> answers = null;
 			while(true) {
@@ -42,6 +50,7 @@ public class ExamServer {
 				}
 			}
 			System.out.println("Student: " + studentName + " finished exam.");
+			oos.close();
 			ois.close();
 			s.close();
 			System.out.println("Saving results to file...");
@@ -54,20 +63,14 @@ public class ExamServer {
 	}
 
 	private void saveStudentResults(String student, int points) throws IOException {
-		String filename = exam.getTitle();
-		filename += "-RESULTS-";
-		LocalDateTime currentData = LocalDateTime.now();
-		DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd-MM-yyyy-HH-mm-ss-SS");
-		String formattedData = currentData.format(myFormatObj);
-		filename += formattedData;
-		filename += ".dat";
-		BufferedWriter resultFile = new BufferedWriter(new FileWriter(filename));
-		resultFile.write(student + ": " + points + "/" + exam.getQuestions().size() + "\n");
+		try(BufferedWriter resultFile = new BufferedWriter(new FileWriter("results/" + filename))) {
+			resultFile.write(student + ": " + points + "/" + exam.getQuestions().size() + "\n");
+			resultFile.write(3333);
+		}
 	}
 	private int countPoints(ArrayList<Integer> answers) {
 		int correctAnswers = 0;
 		for(int i=0; i < exam.getQuestions().size() ; i++) {
-
 			if(exam.getQuestions().get(i).getCorrectAnswer() == answers.get(i)) {
 				correctAnswers++;
 			}
