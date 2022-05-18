@@ -27,7 +27,7 @@ public class ExamServer {
 		filename += ".txt";
 	}
 
-	public void runServer() throws IOException, ClassNotFoundException, InterruptedException {
+	public void runServer() throws IOException, ClassNotFoundException {
 		server = new ServerSocket(port);
 
 		while(true) {
@@ -35,10 +35,10 @@ public class ExamServer {
 			Socket s = server.accept();
 			ObjectInputStream ois = new ObjectInputStream(s.getInputStream());
 			String studentName = (String) ois.readObject();
-			System.out.println("Student: " + studentName + " logged in.");
+			System.out.println("Student " + studentName + " logged in.");
 
 			ObjectOutputStream oos = new ObjectOutputStream(s.getOutputStream());
-			System.out.println("Sending exam to: " + studentName);
+			System.out.println("Sending exam to " + studentName);
 			oos.writeObject(exam);
 
 			ArrayList<Integer> answers = null;
@@ -49,7 +49,7 @@ public class ExamServer {
 					break;
 				}
 			}
-			System.out.println("Student: " + studentName + " finished exam.");
+			System.out.println("Student " + studentName + " finished exam.");
 			oos.close();
 			ois.close();
 			s.close();
@@ -63,9 +63,10 @@ public class ExamServer {
 	}
 
 	private void saveStudentResults(String student, int points) throws IOException {
+		File results = new File("results");
+		results.mkdir();
 		try(BufferedWriter resultFile = new BufferedWriter(new FileWriter("results/" + filename))) {
 			resultFile.write(student + ": " + points + "/" + exam.getQuestions().size() + "\n");
-			resultFile.write(3333);
 		}
 	}
 	private int countPoints(ArrayList<Integer> answers) {

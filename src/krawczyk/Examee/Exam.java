@@ -11,6 +11,7 @@ public class Exam implements Serializable {
 	private static final long serialVersionUID = 2L;
 	private String title;
 	private int durationInMinutes;
+
 	private ArrayList<Question> questions;
 
 	public String getTitle() {
@@ -19,6 +20,10 @@ public class Exam implements Serializable {
 
 	public ArrayList<Question> getQuestions() {
 		return questions;
+	}
+
+	public int getDurationInMinutes() {
+		return durationInMinutes;
 	}
 
 	public void createNewAndSaveToFile() throws IOException {

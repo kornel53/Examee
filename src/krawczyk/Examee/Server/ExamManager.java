@@ -60,7 +60,7 @@ public class ExamManager {
 						String quizFile = f.getName();
 						String quizTitle = Exam.formatFileNameToExamTitle(f.getName());
 						quizzes.put(quizTitle, quizFile);
-						System.out.println(quizTitle);
+						System.out.println("\t" + quizTitle);
 						examsExist = true;
 					}
 					boolean success = false;
@@ -68,16 +68,16 @@ public class ExamManager {
 						System.out.println("Enter a title: ");
 						String chosenExamTitle = scanner.nextLine();
 						for(Map.Entry<String, String> quiz : quizzes.entrySet()) {
-							System.out.println("Comparing " + quiz.getKey() + " to " + chosenExamTitle);
 							if(quiz.getKey().equalsIgnoreCase(chosenExamTitle)) {
 								readExamFromFile(quiz.getValue());
 								System.out.println(quiz.getValue());
 								success = true;
 								break;
 							}
-							else
-								System.out.println("There is no an exam named " + chosenExamTitle + ". Try again.");
 						}
+					}
+					if(!success) {
+						System.out.println("Exam not found.");
 					}
 					break;
 				case 0:
