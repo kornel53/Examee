@@ -54,6 +54,7 @@ public class ExamManager {
 				case 3:
 					System.out.println("Existing exams:");
 					File quizDirectory = new File("quiz");
+					quizDirectory.mkdir();
 					HashMap<String, String> quizzes = new HashMap<>();
 					boolean examsExist = false;
 					for( File f : quizDirectory.listFiles()){
